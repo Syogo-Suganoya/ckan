@@ -31,10 +31,12 @@ def is_valid_field_name(name: str):
     * can't contain double quote (")
     * can't be empty
     * can't contain control characters
+    * can't be longer than 63 bytes (PostgreSQL identifier limit)
     '''
     return (name and name == name.strip() and
             not name.startswith('_') and
-            '"' not in name
+            '"' not in name and
+            len(name.encode('utf-8')) <= 63
             and not any(
                 unicodedata.category(char).startswith('C') for char in name))
 
