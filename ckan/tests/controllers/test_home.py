@@ -12,6 +12,12 @@ class TestHome(object):
         response = app.get(url_for("home.index"))
         assert "Welcome to CKAN" in response.body
 
+    def test_home_search_uses_same_label_as_dataset_search(self, app):
+        response = app.get(url_for("home.index"))
+        field = BeautifulSoup(response.body).select_one("#field-main-search")
+        assert field["placeholder"] == "Search datasets..."
+        assert field["aria-label"] == "Search datasets..."
+
     @pytest.mark.usefixtures("non_clean_db")
     def test_email_address_nag(self, app):
         # before CKAN 1.6, users were allowed to have no email addresses
