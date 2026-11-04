@@ -18,6 +18,10 @@ def test_is_valid_field_name():
     assert helpers.is_valid_field_name("'")
     assert not helpers.is_valid_field_name("")
     assert helpers.is_valid_field_name("foo%bar")
+    assert helpers.is_valid_field_name("a" * 63)
+    assert not helpers.is_valid_field_name("a" * 64)
+    assert helpers.is_valid_field_name("あ" * 21)
+    assert not helpers.is_valid_field_name("あ" * 22)
 
 
 def test_is_valid_table_name():
@@ -29,3 +33,4 @@ def test_is_valid_table_name():
     assert helpers.is_valid_table_name("'")
     assert not helpers.is_valid_table_name("")
     assert not helpers.is_valid_table_name("foo%bar")
+    assert not helpers.is_valid_table_name("a" * 64)
